@@ -33,8 +33,8 @@ INSERT INTO restaurant(name, address, category) values
 INSERT INTO users(name, email, karma) values
   ('Jake', 'jake@email.com', 6),
   ('Natalie', 'natalie@email.com', 7),
-  ('Toby', 'toby@email.com', 5),
-  ('Max', 'max@email.com', 4),
+  ('Toby', 'max@email.com', 5),
+  ('Max', 'rob@email.com', 4),
   ('Rob', 'rob@email.com', 6);
 
 INSERT INTO reviews(users_id, stars, title, review, restaurant_id) values

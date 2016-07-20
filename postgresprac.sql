@@ -207,3 +207,24 @@ where
       9 | Crumpet           | Erica     | 2012-09-22 08:36:38
      10 | Smith             | Darren    | 2012-09-26 18:08:45
  (10 rows)
+
+ 9. How can you produce an ordered list of the first 10 surnames in the members table? The list must not contain duplicates.
+
+ select distinct surname
+ 	from members
+ order by surname
+  limit 10;
+
+ surname
+-------------------
+Crumpet
+Farrell
+Hunt
+Jones
+Purview
+Rumney
+Sarwin
+Smith
+Tupperware
+Worthington-Smyth
+(10 rows)

@@ -393,7 +393,123 @@ restaurant=# select * from reviews;
         5 |     3 | maxreview     | Bad       |             4
         2 |     5 | robreview     | Good      |             5
 (5 rows)
+-------
 
+
+--  To connect to the table I want to work on then
+\c restaurant - the table name
+
+-- count the number of restaurants
+select count(*) from restaurants;
+
+count
+-------
+    6
+(1 row)
+
+-- get the average star rating for all reviews from reviews table
+the total for stars is 22/no of entries 5 = 4.4
+select avg(stars) from review;
+
+avg
+--------------------
+4.4000000000000000
+(1 row)
+
+-- get the lowest star rating for all reviews
+will get the lowest of the star ratings from thie list
+select min(stars) from review;
+
+min
+-----
+  3
+(1 row)
+
+-- get the average star rating by restaurant
+
+--  First I tried this
+    we are listing all the columns we want to work on.
+
+
+select
+  restaurant.name, reviews.stars, reviews.review
+from
+  restaurant, reviews
+where
+  restaurant.restaurant_id = reviews.restaurant_id;
+
+  name          | stars |  review
+------------------------+-------+-----------
+Maggianos Little Italy |     5 | Excellent
+On The Border          |     3 | Bad
+On The Border          |     4 | Good
+Marcellos              |     5 | Best
+NaanStop               |     5 | Good
+(5 rows)
+
+--  Then get the average
+
+restaurant_id |        avg
+---------------+--------------------
+            5 | 5.0000000000000000
+            6 | 5.0000000000000000
+            4 | 3.5000000000000000
+            1 | 5.0000000000000000
+(4 rows)
+
+-- The recommendation in the next part is not to group by restaurant.name because ifthere are 2 different restaurants with same name then it will merge all the information for both the restaurants.
+So, do it without restaurant.name in the group by section like above.
+
+select
+  restaurant.restaurant_id,
+  restaurant.name,
+  avg(stars)
+from
+  restaurant, reviews
+where
+  restaurant.restaurant_id = reviews.restaurant_id
+group by
+  restaurant.restaurant_id, restaurant.name;
+
+  restaurant_id |          name          |        avg
+ ---------------+------------------------+--------------------
+              1 | Maggianos Little Italy | 5.0000000000000000
+              6 | Marcellos              | 5.0000000000000000
+              4 | On The Border          | 3.5000000000000000
+              5 | NaanStop               | 5.0000000000000000
+ (4 rows)
+
+
+
+
+select
+  restaurant.name,
+  avg(stars)
+from
+  restaurant, review
+where
+  restaurant.id = review.restaurant_id
+group by
+  reviews.restaurant_id;
+======================================
+
+select
+user_table.id as author.id,
+title as title,
+review as review,
+stars as stars,
+restaurant.id as restaurant_id,
+restaurant.name as restaurant
+from
+restaurant,
+user_table,
+reviews
+where
+user_table.id = reviews.author_id and
+restaurant.id = reviews.restaurant_id;
+
+
+================================
 select
   restaurant.id,
   restaurant.name,
@@ -409,12 +525,3 @@ where
 group by
   restaurant.id
 ;
-
-aggregation.sql
-examples.sql
-exercises.md
-exercises2.md
-install.md
-relations.sql
-restaurant-2.sql
-restaurant.sql
